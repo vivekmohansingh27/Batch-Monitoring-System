@@ -1,0 +1,119 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 65
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database unit5;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> use unit5;
+Database changed
+mysql> create table batch(;
+ERROR 1064 (42000): You have an error in your SQL syntax; checkthe manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> CREATE TABLE IF NOT EXISTS `unit5`.`Batch` (
+    ->   `bid` INT NOT NULL AUTO_INCREMENT,
+    ->   `batch_id` VARCHAR(15) NOT NULL,
+    ->   `course_name` VARCHAR(25) NOT NULL,
+    ->   `total_seat` INT NOT NULL,
+    ->   `batch_startDate` DATETIME NOT NULL,
+    ->   `batch_duartion(months)` INT NOT NULL,
+    ->   `is_delete` TINYINT NOT NULL,
+    ->   PRIMARY KEY (`bid`),
+    ->   UNIQUE INDEX `bid_UNIQUE` (`bid` ASC) VISIBLE,
+    ->   UNIQUE INDEX `batch_id_UNIQUE` (`batch_id` ASC) VISIBLE);
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> CREATE TABLE IF NOT EXISTS `unit5`.`Faculty` (
+    ->   `fid` INT NOT NULL AUTO_INCREMENT,
+    ->   `faculty_id` VARCHAR(15) NOT NULL,
+    ->   `first_name` VARCHAR(25) NOT NULL,
+    ->   `last_name` VARCHAR(45) NOT NULL,
+    ->   `username` VARCHAR(45) NOT NULL,
+    ->   `password` VARCHAR(45) NOT NULL,
+    ->   `mobile` VARCHAR(12) NULL,
+    ->   `address` VARCHAR(45) NOT NULL,
+    ->   `is_delete` TINYINT NOT NULL,
+    ->   PRIMARY KEY (`fid`),
+    ->   UNIQUE INDEX `faculty_id_UNIQUE` (`faculty_id` ASC) VISIBLE,
+    ->   UNIQUE INDEX `fid_UNIQUE` (`fid` ASC) VISIBLE,
+    ->   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
+    -> ;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> CREATE TABLE IF NOT EXISTS `unit5`.`batch_faculty` (
+    ->   `id` INT NOT NULL AUTO_INCREMENT,
+    ->   `bid` INT NULL,
+    ->   `fid` INT NULL,
+    ->   PRIMARY KEY (`id`),
+    ->   INDEX `fk_bid_idx` (`bid` ASC) VISIBLE,
+    ->   INDEX `fk_fid_idx` (`fid` ASC) VISIBLE,
+    ->   CONSTRAINT `fk_bid`
+    ->     FOREIGN KEY (`bid`)
+    ->     REFERENCES `unit5`.`Batch` (`bid`)
+    ->     ON DELETE NO ACTION
+    ->     ON UPDATE NO ACTION,
+    ->   CONSTRAINT `fk_fid`
+    ->     FOREIGN KEY (`fid`)
+    ->     REFERENCES `unit5`.`Faculty` (`fid`)
+    ->     ON DELETE NO ACTION
+    ->     ON UPDATE NO ACTION)
+    -> ;
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> desc faculty;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra   |
++------------+-------------+------+-----+---------+----------------+
+| fid        | int         | NO   | PRI | NULL    | auto_increment |
+| faculty_id | varchar(15) | NO   | UNI | NULL    |
+   |
+| first_name | varchar(25) | NO   |     | NULL    |
+   |
+| last_name  | varchar(45) | NO   |     | NULL    |
+   |
+| username   | varchar(45) | NO   | UNI | NULL    |   |
+| password   | varchar(45) | NO   |     | NULL    |
+   |
+| mobile     | varchar(12) | YES  |     | NULL    |
+   |
+| address    | varchar(45) | NO   |     | NULL    |
+   |
+| is_delete  | tinyint     | NO   |     | NULL    |
+   |
++------------+-------------+------+-----+---------+----------------+
+9 rows in set (0.04 sec)
+
+mysql> desc batch;
++------------------------+-------------+------+-----+---------+----------------+
+| Field                  | Type        | Null | Key | Default |Extra          |
++------------------------+-------------+------+-----+---------+----------------+
+| bid                    | int         | NO   | PRI | NULL    |auto_increment |
+| batch_id               | varchar(15) | NO   | UNI | NULL    |               |
+| course_name            | varchar(25) | NO   |     | NULL    |               |
+| total_seat             | int         | NO   |     | NULL    |               |
+| batch_startDate        | datetime    | NO   |     | NULL    |
+               |
+| batch_duartion(months) | int         | NO   |     | NULL    |               |
+| is_delete              | tinyint     | NO   |     | NULL    |               |
++------------------------+-------------+------+-----+---------+----------------+
+7 rows in set (0.01 sec)
+
+mysql> desc batch_faculty;
++-------+------+------+-----+---------+----------------+
+| Field | Type | Null | Key | Default | Extra          |
++-------+------+------+-----+---------+----------------+
+| id    | int  | NO   | PRI | NULL    | auto_increment |
+| bid   | int  | YES  | MUL | NULL    |                |
+| fid   | int  | YES  | MUL | NULL    |                |
++-------+------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql>
