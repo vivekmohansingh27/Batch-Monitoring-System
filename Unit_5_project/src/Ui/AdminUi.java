@@ -164,6 +164,52 @@ public class AdminUi {
 		}
 	}
 	
+	public static void AssignFacultyToBatch(Scanner sc) {
+		System.out.println("Enter Batch id");
+		String batch_id = sc.next();
+		System.out.println("Enter Faculty id");
+		String faculty_id = sc.next();
+		
+		Batch_dao bd = new Batch_daoImpl();
+		try {
+			bd.assginfacultytobatch(batch_id,faculty_id);
+			System.out.println("Batch is Assign to faculty");
+		} catch (SomethingWentWrongException | NoRecordFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	///seeee method
+	public static void getBatchDetailsByFacultyid(Scanner sc) {
+		System.out.println("Enter faculty id");
+		String faculty_id = sc.next();
+		
+		Batch_dao batch_dao = new Batch_daoImpl();
+		try {
+			List<Batch_dto> list = batch_dao.getBatchDetailsByFacultyid(faculty_id);
+			Consumer<Batch_dto> con = batch -> System.out.println("Batch Id " + batch.getBatch_id() + " corse_Name " + batch.getCourse_name() 
+			+ " total Seat " + batch.getTotal_seat() + " Start Date " + batch.getBatch_startDate()+" Duration "+batch.getBatch_duration()+" Months");
+			list.forEach(con);
+		}catch(SomethingWentWrongException | NoRecordFoundException ex) {
+			System.out.println(ex.getMessage());
+		}
+		
+	}
+	
+	public static void deletebatch(Scanner sc) {
+		System.out.println("Enter batch id");
+		String batch_id = sc.next();
+		Batch_dao bd = new Batch_daoImpl();
+		try {
+			bd.deletebatch(batch_id);
+			System.out.println("Batch is deleted");
+		} catch (SomethingWentWrongException | NoRecordFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static void adminMenu(Scanner sc) {
 		int choice=0;
 		do{
@@ -174,6 +220,7 @@ public class AdminUi {
 			System.out.println("5 -> Assign faculty to Batch");
 			System.out.println("6 -> Batch details by faculty_id");
 			System.out.println("7 -> Delete Batch");
+			System.out.println("8 -> Add faculty");
 			System.out.println("0 -> Exit");
 			System.out.println("Enter Your Choice");
 			choice = sc.nextInt();
@@ -189,6 +236,19 @@ public class AdminUi {
 				break;
 			case 4:
 				viewBatchbyid(sc);
+				break;
+			case 5:
+				AssignFacultyToBatch(sc);
+				break;
+			case 6:	
+				getBatchDetailsByFacultyid(sc);
+				break;
+			case 7:
+				deletebatch(sc);
+				break;
+			case 8:
+				FacultyUI.addFaculty();
+				break;
 			case 0: System.out.println(" Bye Bye");
 				break;
 			default: System.out.println("Sorry you choose Wrong choice");

@@ -22,4 +22,10 @@ public interface Batch_dao {
 	public List<Batch_dto> getbatchList() throws SomethingWentWrongException,NoRecordFoundException;
 
 	public List<Batch_dto> getbatchListbyid(String batch_id) throws SomethingWentWrongException,NoRecordFoundException;
+
+	public void assginfacultytobatch(String batch_id, String faculty_id)throws SomethingWentWrongException,NoRecordFoundException;
+
+	public List<Batch_dto> getBatchDetailsByFacultyid(String faculty_id)throws SomethingWentWrongException,NoRecordFoundException;
+
+	public void deletebatch(String batch_id)throws SomethingWentWrongException,NoRecordFoundException;
 }
