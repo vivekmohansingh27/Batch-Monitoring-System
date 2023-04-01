@@ -122,7 +122,7 @@ public class Batch_daoImpl implements Batch_dao{
 		Connection conn = null;
 		try {
 			conn = DBUtils.getConnectionTodatabase();
-			String query = "update batch set batch_duartion=? where batch_id=?";
+			String query = "update batch set batch_startDate=? where batch_id=?";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setDate(1,Date.valueOf(batch_startDate));
 			ps.setString(2,batch_id);
@@ -237,7 +237,7 @@ public class Batch_daoImpl implements Batch_dao{
 		List<Batch_dto> list = null;
 		try {
 			conn = DBUtils.getConnectionTodatabase();
-			String query = "Select b.batch_id,b.course_name,b.total_seat,b.batch_startDate,b.batch_duartion from batch b inner join batch_faculty bf on b.id=bf.bid";
+			String query = "Select b.batch_id,b.course_name,b.total_seat,b.batch_startDate,b.batch_duartion from batch b inner join batch_faculty bf on b.bid=bf.bid inner join faculty f on (select fid from faculty where faculty_id=?) = bf.fid";
 			
 			PreparedStatement ps = conn.prepareStatement(query);
 			
@@ -253,7 +253,7 @@ public class Batch_daoImpl implements Batch_dao{
 		
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
-		throw new SomethingWentWrongException("Not updated");
+		throw new SomethingWentWrongException("no batch given to faculty");
 		}finally {
 			try {
 				DBUtils.closeConnection(conn);
@@ -289,6 +289,40 @@ public class Batch_daoImpl implements Batch_dao{
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public List<Batch_dto> getAssignedbatchList(int id) throws SomethingWentWrongException, NoRecordFoundException {
+		Connection conn = null;
+		List<Batch_dto> list = null;
+		try {
+			conn = DBUtils.getConnectionTodatabase();
+			String query = "Select b.batch_id,b.course_name,b.total_seat,b.batch_startDate,b.batch_duartion from batch b inner join batch_faculty bf on b.bid=bf.bid inner join faculty f on (select fid from faculty where fid=?) = bf.fid";
+			
+			PreparedStatement ps = conn.prepareStatement(query);
+			
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if(DBUtils.isResultSetEmpty(rs)) {
+				throw new NoRecordFoundException("No record");
+			}
+			list = new ArrayList<>();
+			while(rs.next()) {
+				list.add(new Batch_dtoImpl(rs.getString("batch_id"),rs.getString("course_name"),rs.getInt("total_seat"),rs.getDate("batch_startDate").toLocalDate(),rs.getInt("batch_duartion")));
+			}
+		
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+		throw new SomethingWentWrongException("No batch assigned");
+		}finally {
+			try {
+				DBUtils.closeConnection(conn);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 
 	
