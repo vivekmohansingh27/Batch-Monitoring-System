@@ -3,14 +3,17 @@ package Ui;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
-
-
+import Dao.Batch_dao;
+import Dao.Batch_daoImpl;
 import Dao.Faculty_dao;
 import Dao.Faculty_daoImpl;
 import Dao.LoggedINFaculty;
+import Dto.Batch_dto;
 import Dto.Faculty_dto;
 import Dto.Faculty_dtoImpl;
+import Excep.NoRecordFoundException;
 import Excep.SomethingWentWrongException;
 
 public class FacultyUI {
@@ -50,7 +53,18 @@ public class FacultyUI {
 		}
 	}
 	
-
+	public static void viewAssignedbatch() {
+		int id = LoggedINFaculty.loggedInFacultyId;
+		Batch_dao batch_dao = new Batch_daoImpl();
+		try {
+			List<Batch_dto> list = batch_dao.getAssignedbatchList(id);
+			Consumer<Batch_dto> con = batch -> System.out.println("Batch Id " + batch.getBatch_id() + " corse_Name " + batch.getCourse_name() 
+			+ " total Seat " + batch.getTotal_seat() + " Start Date " + batch.getBatch_startDate()+" Duration "+batch.getBatch_duration()+" Months");
+			list.forEach(con);
+		}catch(SomethingWentWrongException | NoRecordFoundException ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 	
 
 	
@@ -87,4 +101,6 @@ public class FacultyUI {
 	public static void logout() {
 		faculty_dao.logout();
 	}
+	
+	
 }

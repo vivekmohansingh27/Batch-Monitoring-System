@@ -28,4 +28,6 @@ public interface Batch_dao {
 	public List<Batch_dto> getBatchDetailsByFacultyid(String faculty_id)throws SomethingWentWrongException,NoRecordFoundException;
 
 	public void deletebatch(String batch_id)throws SomethingWentWrongException,NoRecordFoundException;
+
+	public List<Batch_dto> getAssignedbatchList(int id)throws SomethingWentWrongException,NoRecordFoundException;
 }

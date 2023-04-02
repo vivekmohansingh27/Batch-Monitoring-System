@@ -246,9 +246,6 @@ public class AdminUi {
 			case 7:
 				deletebatch(sc);
 				break;
-			case 8:
-				FacultyUI.addFaculty();
-				break;
 			case 0: System.out.println(" Bye Bye");
 				break;
 			default: System.out.println("Sorry you choose Wrong choice");
