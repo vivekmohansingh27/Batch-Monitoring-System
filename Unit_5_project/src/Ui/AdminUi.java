@@ -25,7 +25,6 @@ public class AdminUi {
 			batchdao.updatecourseName(course_name, batch_id);
 			System.out.println("Course Name updated");
 		} catch (SomethingWentWrongException | NoRecordFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -40,7 +39,6 @@ public class AdminUi {
 			batchdao.updateseatNumber(total_seat, batch_id);
 			System.out.println("Course seat updated");
 		} catch (SomethingWentWrongException | NoRecordFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -49,14 +47,13 @@ public class AdminUi {
 	public static void updateBatchduration(Scanner sc) {
 		System.out.println("Enter batch id");
 		String batch_id = sc.next();
-		System.out.println("Enter batch seat");
+		System.out.println("Enter batch duration");
 		int batch_duration = sc.nextInt();
 		Batch_dao batchdao = new Batch_daoImpl();
 		try {
 			batchdao.updateduration(batch_duration, batch_id);
 			System.out.println("Course duration updated");
 		} catch (SomethingWentWrongException | NoRecordFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -64,14 +61,13 @@ public class AdminUi {
 	public static void updateStartdate(Scanner sc) {
 		System.out.println("Enter batch id");
 		String batch_id = sc.next();
-		System.out.println("Enter batch seat");
+		System.out.println("Enter batch Start date");
 		LocalDate batch_startDate = LocalDate.parse(sc.next());
 		Batch_dao batchdao = new Batch_daoImpl();
 		try {
 			batchdao.updatestartDate(batch_startDate, batch_id);
 			System.out.println("Course start date updated");
 		} catch (SomethingWentWrongException | NoRecordFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -115,9 +111,7 @@ public class AdminUi {
 		System.out.println("Enter Batch id");
 		String batch_id = sc.next();
 		System.out.println("Enter course name");
-		//System.out.println();
 		String course_name = sc.next();
-		//System.out.println();
 		System.out.println("Enter total seat");
 		int total_seat = sc.nextInt();
 		System.out.println("Enter Batch start date");
@@ -132,7 +126,6 @@ public class AdminUi {
 			batch_dao.addBatch(batch);
 			System.out.println("Batch is Added");
 		} catch (SomethingWentWrongException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -220,7 +213,6 @@ public class AdminUi {
 			System.out.println("5 -> Assign faculty to Batch");
 			System.out.println("6 -> Batch details by faculty_id");
 			System.out.println("7 -> Delete Batch");
-			System.out.println("8 -> Add faculty");
 			System.out.println("0 -> Exit");
 			System.out.println("Enter Your Choice");
 			choice = sc.nextInt();
