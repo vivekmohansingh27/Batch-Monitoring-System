@@ -1,5 +1,5 @@
 # lavish-sink-2448
-new project
+
 Batch Monitoring System
 In an educational Institute, there are several batches running every day for
 same/different batches. It will be difficult for the Faculties and admin to know the status
