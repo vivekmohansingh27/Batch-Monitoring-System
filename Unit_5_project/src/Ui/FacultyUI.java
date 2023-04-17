@@ -72,7 +72,7 @@ public class FacultyUI {
 		try {
 			int id = LoggedINFaculty.loggedInFacultyId;
 			faculty_dao.deleteFaculty(id);
-			System.out.println("You are Logged out.\nDeleted your account");
+			System.out.println("Your account is deleted");
 		}catch(SomethingWentWrongException | ClassNotFoundException | Excep.NoRecordFoundException ex) {
 			System.out.println(ex);
 		}
