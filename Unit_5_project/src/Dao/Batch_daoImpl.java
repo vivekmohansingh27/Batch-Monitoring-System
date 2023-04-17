@@ -160,7 +160,7 @@ public class Batch_daoImpl implements Batch_dao{
 		
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
-		throw new SomethingWentWrongException("Not updated");
+		throw new SomethingWentWrongException("batch is not present");
 		}finally {
 			try {
 				DBUtils.closeConnection(conn);
